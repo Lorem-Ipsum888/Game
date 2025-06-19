@@ -78,3 +78,5 @@ def main():
     print("Бот запущен. Жми /role1 или /role2")
     updater.start_polling()
     updater.idle()
+    if __name__ == '__main__':
+    main()
