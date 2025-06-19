@@ -1,6 +1,5 @@
 import random
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import Updater, CommandHandler
 
 TOKEN = "8138580219:AAE1KS9rNfcJStUDrHIUESQQ-osw7rTU50g"
 
@@ -61,17 +60,21 @@ def get_unique_role(role_list, used_list):
     used_list.append(role)
     return role
 
-async def role1(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def role1(update, context):
     role, motive = get_unique_role(male_roles, used_male_roles)
     await update.message.reply_text(f"🧔 Твоя роль:\n<b>{role}</b>\n🎯 Мотивация: {motive}", parse_mode="HTML")
 
-async def role2(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def role(update, context)::
     role, motive = get_unique_role(female_roles, used_female_roles)
     await update.message.reply_text(f"👩 Твоя роль:\n<b>{role}</b>\n🎯 Мотивация: {motive}", parse_mode="HTML")
 
 def main():
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("role1", role1))
-    app.add_handler(CommandHandler("role2", role2))
-    print("Бот запущен. Жми /роль1 или /роль2 в Telegram.")
-    app.run_polling()
+    updater = Updater(token=TOKEN, use_context=True)
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler("role1", role1))
+    dp.add_handler(CommandHandler("role2", role2))
+
+    print("Бот запущен. Жми /role1 или /role2")
+    updater.start_polling()
+    updater.idle()
