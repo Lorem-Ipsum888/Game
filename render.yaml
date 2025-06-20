@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: role-game-bot
-    env: python
+    name: game-bot
+    runtime: python
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python main.py"
-    runtime: python3.11
+    pythonVersion: 3.11.6
