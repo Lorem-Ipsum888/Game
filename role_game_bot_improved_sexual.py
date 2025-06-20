@@ -64,6 +64,7 @@ def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("role1", role1))
     app.add_handler(CommandHandler("role2", role))
+
     print("Бот запущен. Жми /role1 или /role2")
     app.run_polling()
 
