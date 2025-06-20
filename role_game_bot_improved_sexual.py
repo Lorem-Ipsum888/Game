@@ -1,5 +1,3 @@
-import random
-from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 TOKEN = "8138580219:AAE1KS9rNfcJStUDrHIUESQQ-osw7rTU50g"
@@ -62,11 +60,9 @@ async def role(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
+
     app.add_handler(CommandHandler("role1", role1))
-    app.add_handler(CommandHandler("role2", role))
+    app.add_handler(CommandHandler("role2", role2))
 
     print("Бот запущен. Жми /role1 или /role2")
     app.run_polling()
-
-if __name__ == "__main__":
-    main()
