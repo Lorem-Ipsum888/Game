@@ -1,5 +1,4 @@
-import random
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 TOKEN = "8138580219:AAE1KS9rNfcJStUDrHIUESQQ-osw7rTU50g"
 
@@ -51,32 +50,20 @@ female_roles = [
     ("Двоюродная тётя","Мотивация к знакомству:Она приехала с семьёй с детьми, сестрой, мужем. Никогда бы не подумала, что кто-то из «младших» посмотрит на неё так. Но она заметила твой взгляд мимолётный, долгий, залипающий. Ей стало стыдно. Потом — тепло. Теперь она выходит в полотенце чуть позже всех, садится ближе к тебе, когда все засыпают. Она не флиртует — она искушает молчанием.Сексуальные желания (вслух):Фантазирует, как ты заходишь к ней ночью в душ, закрываешь дверь, целуешь её, пока вода шумит. Как ты прижимаешься сзади, засовываешь руку под трусы, и она впервые за долгое время не говорит нельзя — только дышит. Возбуждается от ощущения, что вы родственники, что всё неправильно, что за стенкой дети. Мечтает, чтобы ты трахал её молча, глубоко, быстро — пока не проснулись. И чтобы она сама не знала, плачет она от вины или удовольствия.🕯️ Подсознательное желание (неосознаваемое):Хочет, чтобы ты был первым, кто нарушит правила семьи. Чтобы ты взял её не как женщину, а как запретную, твою, родную, которую никто не должен был трогать. И чтобы она запомнила этот момент — как единственный раз, когда была собой, а не чьей-то тётей.")
 ]
 
-def get_unique_role(role_list, used_list):
-    available = [r for r in role_list if r not in used_list]
-    if not available:
-        used_list.clear()
-        available = role_list.copy()
-    role = random.choice(available)
-    used_list.append(role)
-    return role
-
-def role1(update, context):
+async def role1(update: Update, context: ContextTypes.DEFAULT_TYPE):
     role, motive = get_unique_role(male_roles, used_male_roles)
     await update.message.reply_text(f"🧔 Твоя роль:\n<b>{role}</b>\n🎯 Мотивация: {motive}", parse_mode="HTML")
 
-def role(update, context):
+async def role(update: Update, context: ContextTypes.DEFAULT_TYPE):
     role, motive = get_unique_role(female_roles, used_female_roles)
     await update.message.reply_text(f"👩 Твоя роль:\n<b>{role}</b>\n🎯 Мотивация: {motive}", parse_mode="HTML")
 
 def main():
-    updater = Updater(token=TOKEN, use_context=True)
-    dp = updater.dispatcher
-
-    dp.add_handler(CommandHandler("role1", role1))
-    dp.add_handler(CommandHandler("role2", role2))
-
+    app = ApplicationBuilder().token(TOKEN).build()
+    app.add_handler(CommandHandler("role1", role1))
+    app.add_handler(CommandHandler("role2", role))
     print("Бот запущен. Жми /role1 или /role2")
-    updater.start_polling()
-    updater.idle()
-    if __name__ == '__main__':
+    app.run_polling()
+
+if __name__ == "__main__":
     main()
