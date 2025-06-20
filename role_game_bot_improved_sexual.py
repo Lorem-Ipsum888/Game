@@ -64,7 +64,7 @@ def role1(update, context):
     role, motive = get_unique_role(male_roles, used_male_roles)
     await update.message.reply_text(f"🧔 Твоя роль:\n<b>{role}</b>\n🎯 Мотивация: {motive}", parse_mode="HTML")
 
-def role(update, context)::
+def role(update, context):
     role, motive = get_unique_role(female_roles, used_female_roles)
     await update.message.reply_text(f"👩 Твоя роль:\n<b>{role}</b>\n🎯 Мотивация: {motive}", parse_mode="HTML")
 
