@@ -1,4 +1,4 @@
 from role_game_bot_improved_sexual import main
 
-if ____name__ == "____main____":
+if __name__ = = "__main__":
     main()
